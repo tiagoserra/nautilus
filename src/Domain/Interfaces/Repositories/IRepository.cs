@@ -1,17 +1,17 @@
 using Domain.DTOs;
-using Domain.Entites;
+using Domain.Entities;
 
 namespace Domain.Interfaces.Repositories;
 
-public interface IRepository<TEntity> where TEntity : Entity<TEntity>
+public interface IRepository<TEntity> where TEntity : Entity
 {
-    void Insert(TEntity entity);
+    Task InsertAsync(TEntity entity);
 
-    void Update(TEntity entity);
+    Task UpdateAsync(TEntity entity);
 
-    void Delete(TEntity entity);
+    Task DeleteAsync(TEntity entity);
     
-    TEntity GetById(long id);
+    Task<TEntity> GetByIdAsync(long id);
     
-    PaginatedResultDto GetByPaginated(int pageNumber = 1, int pageSize = 25);
+    Task<PaginatedResultDto> GetByPaginatedAsync(int pageNumber = 1, int pageSize = 25);
 }

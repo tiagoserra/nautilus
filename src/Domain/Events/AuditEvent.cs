@@ -1,8 +1,8 @@
-using Domain.Entites;
+using Domain.Entities;
 
 namespace Domain.Events;
 
-public class AuditEvent<TEntity> : DomainEvent where TEntity : Entity<TEntity>
+public class AuditEvent<TEntity> : DomainEvent where TEntity : Entity
 {
     public TEntity Entity { get; }
     

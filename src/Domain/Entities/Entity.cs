@@ -1,12 +1,10 @@
+using Domain.DTOs;
 using Domain.Events;
 using Domain.Interfaces;
-using FluentValidation;
-using FluentValidation.Results;
 
-namespace Domain.Entites;
+namespace Domain.Entities;
 
-public abstract class Entity<T> : AbstractValidator<T>, IHasDomainEvent 
-    where T : Entity<T>
+public abstract class Entity: IHasDomainEvent
 {
     public long Id { get; }
     public DateTimeOffset CreatedOn { get; private set; }
@@ -14,15 +12,9 @@ public abstract class Entity<T> : AbstractValidator<T>, IHasDomainEvent
     public DateTimeOffset ModifiedOn { get; private set; }
     public string ModifiedBy { get; private set; }
     public List<DomainEvent> Events { get; set; }
-    public ValidationResult ValidationResult { get; protected set; }
-    
-    public abstract bool IsValid();
 
-    public Entity()
-    {
-        ValidationResult = new ValidationResult();
-    }
-    
+    public DomainValidationDto DomainValidation { get; protected set; } = new();
+
     public void SetCreation(string createdBy)
     {
         CreatedOn = DateTimeOffset.UtcNow;

@@ -1,0 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Domain.Entities;
+using Infrastructure.Data.Extensions;
+
+namespace Infrastructure.Data.Mappings;
+
+public class %##%Mapping : EntityTypeConfiguration<%##%>
+{
+    public override void Configure(EntityTypeBuilder<%##%> builder)
+    {
+        builder.Property(p => p.Name).IsRequired().HasColumnName("Name").HasMaxLength(255).HasColumnType("VARCHAR(255)");
+
+        builder.ToTable("%#table#%");
+
+        base.Configure(builder);
+    }
+}

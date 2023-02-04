@@ -1,0 +1,18 @@
+namespace UnitTests.Domain.Entities;
+
+public class %##%UniTests
+{
+    [Fact]
+    public void Create%##%WithNameValid()
+    {
+        var entity = new %##%("name");
+        Assert.False(entity.DomainValidation.IsValid());
+    }
+
+    [Fact]
+    public void Create%##%WithNameInValid()
+    {
+        var entity = new %##%("");
+        Assert.False(entity.DomainValidation.IsValid());
+    }
+}

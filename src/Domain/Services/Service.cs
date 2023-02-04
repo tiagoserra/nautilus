@@ -1,57 +1,56 @@
 using Domain.DTOs;
-using Domain.Entites;
+using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
-using FluentValidation.Results;
 
 namespace Domain.Services;
 
-public abstract class Service<TEntity>: IService<TEntity> where TEntity : Entity<TEntity>
+public abstract class Service<TEntity>: IService<TEntity> where TEntity : Entity
 {
-    protected readonly IRepository<TEntity> Repository;
+    private readonly IRepository<TEntity> Repository;
 
     protected Service(IRepository<TEntity> repository)
     {
         Repository = repository;
     }
     
-    public virtual ValidationResult Add(TEntity entity)
+    public virtual async Task<DomainValidationDto> AddAsync(TEntity entity)
     {
-        if (!entity.IsValid())
-            return entity.ValidationResult;
+        if (!entity.DomainValidation.IsValid())
+            return entity.DomainValidation;
             
-        Repository.Insert(entity);
+        await Repository.InsertAsync(entity);
 
         return null;
     }
 
-    public virtual ValidationResult Update(TEntity entity)
+    public virtual async Task<DomainValidationDto> UpdateAsync(TEntity entity)
     {
-        if (!entity.IsValid())
-            return entity.ValidationResult;
+        if (!entity.DomainValidation.IsValid())
+            return entity.DomainValidation;
         
-        Repository.Update(entity);
-        
-        return null;
-    }
-
-    public virtual ValidationResult Remove(TEntity entity)
-    {
-        if (!entity.IsValid())
-            return entity.ValidationResult;
-        
-        Repository.Delete(entity);
+        await Repository.UpdateAsync(entity);
         
         return null;
     }
 
-    public virtual TEntity GetById(long id)
+    public virtual async Task<DomainValidationDto> RemoveAsync(TEntity entity)
     {
-        return Repository.GetById(id);
+        if (!entity.DomainValidation.IsValid())
+            return entity.DomainValidation;
+        
+        await Repository.DeleteAsync(entity);
+        
+        return null;
     }
 
-    public virtual PaginatedResultDto GetByPaginated(int pageNumber = 1, int pageSize = 25)
+    public virtual async Task<TEntity> GetByIdAsync(long id)
     {
-        return Repository.GetByPaginated(pageNumber: pageNumber, pageSize: pageSize);
+        return await Repository.GetByIdAsync(id);
+    }
+
+    public virtual async Task<PaginatedResultDto> GetByPaginatedAsync(int pageNumber = 1, int pageSize = 25)
+    {
+        return await Repository.GetByPaginatedAsync(pageNumber: pageNumber, pageSize: pageSize);
     }
 }

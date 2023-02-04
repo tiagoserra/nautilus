@@ -8,14 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="Class1.cs" />
+    <Compile Remove="DTOs\ValidationResultDto.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Enums" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.4.0" />
   </ItemGroup>
 
 </Project>

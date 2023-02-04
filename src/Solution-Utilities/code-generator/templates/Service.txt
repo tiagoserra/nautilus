@@ -1,11 +1,12 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Services;
 
 namespace Domain.Services;
 
 public class %##%Service : Service<%##%>, I%##%Service
 {
-     public %##%ReadService(IRepository<%##%> repository) 
+     public %##%Service(IRepository<%##%> repository) 
         : base(repository)
     {
     }

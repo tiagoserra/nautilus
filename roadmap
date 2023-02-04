@@ -1,0 +1,24 @@
+layer infrastructure
+    ORM EF Core
+    repositories
+    eventsHandlers
+    services
+    scripts create in layer
+    
+layer UnitTest
+    domain
+    infrastructure
+    
+layer IntegrationTest
+    domain
+    infrastructure
+    
+layer Application
+    globalization
+    proxies
+    cache
+    viewModels
+    
+layer WebAPI
+    controllers
+    

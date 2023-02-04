@@ -14,7 +14,7 @@
 EntityName=$1
 
 if [[ -z "$EntityName" ]]; then
-    echo ERROR: "argument error (2 - EntityName) "
+    echo ERROR: "argument error (EntityName) "
     exit -1
 fi
 
@@ -38,17 +38,38 @@ replaceInFile() {
 
     cp $template $pathFileDestination
     replace '%##%' $EntityName $pathFileDestination
+    replace '%#table#%' $EntityName $pathFileDestination
 }
 
 domainHandler() {
-    echo 'Creating module in Domain'
-    pathDomainDestination='../Domain'
+    echo 'Creating Domain'
+    pathDomainDestination='../../Domain'
 
     replaceInFile $pathDomainDestination'/Entities/'$EntityName'.cs' 'templates/Entity.txt'
     replaceInFile $pathDomainDestination'/Interfaces/Repositories/I'$EntityName'Repository.cs' 'templates/IRepository.txt'
     replaceInFile $pathDomainDestination'/Interfaces/Services/I'$EntityName'Service.cs' 'templates/IService.txt'
 
     replaceInFile $pathDomainDestination'/Services/'$EntityName'Service.cs' 'templates/Service.txt'
+
+    pathUnitTestDestination='../../../tst/UnitTests/Domain/Entities/'
+
+    replaceInFile $pathUnitTestDestination'/'$EntityName'UnitTest.cs' 'templates/EntityUnitTest.txt'
+}
+
+infrastructHandler() 
+
+    echo 'Creating Infrastructure'
+    pathInfrastructureDestination='../../Infrastructure'
+
+    replaceInFile $pathInfrastructureDestination'/Data/Mappings/'$EntityName'Mapping.cs' 'templates/Mapping.txt'
+    replaceInFile $pathInfrastructureDestination'/Data/Repositories/'$EntityName'Repository.cs' 'templates/Repository.txt'
+
+    pathInfrastructureContext=$pathInfrastructureDestination'/Data/Contexts/SqlServerContext.cs'
+
+    lineTest='public DbSet<'$EntityName'> '$EntityName's { get; set; }'
+    replacerNewString=$lineTest'  \n \t//%#DbSet#%'
+    replaceContentByReplaceIfNotExists '//%#DbSet#%' "$replacerNewString" $pathInfrastructureContext "$lineTest"
 }
 
 domainHandler
+infrastructHandler

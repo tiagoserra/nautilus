@@ -1,18 +1,17 @@
 using Domain.DTOs;
-using Domain.Entites;
-using FluentValidation.Results;
+using Domain.Entities;
 
 namespace Domain.Interfaces.Services;
 
-public interface IService<TEntity> where TEntity : Entity<TEntity>
+public interface IService<TEntity> where TEntity : Entity
 {
-    ValidationResult Add(TEntity entity);
+    Task<DomainValidationDto> AddAsync(TEntity entity);
 
-    ValidationResult Update(TEntity entity);
+    Task<DomainValidationDto> UpdateAsync(TEntity entity);
 
-    ValidationResult Remove(TEntity entity);
+    Task<DomainValidationDto> RemoveAsync(TEntity entity);
     
-    TEntity GetById(long id);
+    Task<TEntity> GetByIdAsync(long id);
     
-    PaginatedResultDto GetByPaginated(int pageNumber = 1, int pageSize = 25);
+    Task<PaginatedResultDto> GetByPaginatedAsync(int pageNumber = 1, int pageSize = 25);
 }

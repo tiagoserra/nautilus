@@ -1,3 +1,13 @@
+Sat Feb 02 18:05:00 UTC 2023
+Feature
+    Add layer Infrastrutura
+    Add layer UnitTest
+Fix
+    Code generator error in layer domain and templates
+Improvment
+    Add handler on code generator to Infrastrutura and UnitTests
+    Alter way how validate model, remove fluent validation
++--------------------------+
 Mon Jan 30 20:28:00 UTC 2023
 Feature
     Add code generator
