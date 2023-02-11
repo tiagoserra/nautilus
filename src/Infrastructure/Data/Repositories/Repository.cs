@@ -53,9 +53,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     }
 
     public async Task<TEntity> GetByIdAsync(long id)
-    {
-        return await QueryFactory.Query(typeof(TEntity).Name).Where("Id", id).FirstAsync<TEntity>();
-    }
+        => await QueryFactory.Query(typeof(TEntity).Name).Where("Id", id).FirstAsync<TEntity>();
 
     public async Task<PaginatedResultDto> GetByPaginatedAsync(int pageNumber = 1, int pageSize = 25)
     {

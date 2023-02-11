@@ -1,6 +1,6 @@
 namespace UnitTests.Domain.Entities;
 
-public class %##%UniTests
+public class %##%Tests
 {
     [Fact]
     public void Create%##%WithNameValid()

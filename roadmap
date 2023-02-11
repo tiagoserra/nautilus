@@ -1,17 +1,19 @@
-layer infrastructure
-    ORM EF Core
-    repositories
-    eventsHandlers
-    services
-    scripts create in layer
-    
 layer UnitTest
     domain
+        Entities
+        Services
     infrastructure
+        Services
+        Repositories
+        Eventhandler
     
 layer IntegrationTest
     domain
+        Services
     infrastructure
+        Services
+        Repositories
+        Eventhandler
     
 layer Application
     globalization

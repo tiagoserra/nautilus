@@ -53,7 +53,7 @@ domainHandler() {
 
     pathUnitTestDestination='../../../tst/UnitTests/Domain/Entities/'
 
-    replaceInFile $pathUnitTestDestination'/'$EntityName'UnitTest.cs' 'templates/EntityUnitTest.txt'
+    replaceInFile $pathUnitTestDestination'/'$EntityName'Test.cs' 'templates/EntityUnitTest.txt'
 }
 
 infrastructHandler() 
