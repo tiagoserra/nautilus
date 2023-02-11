@@ -6,7 +6,7 @@ public class %##%Tests
     public void Create%##%WithNameValid()
     {
         var entity = new %##%("name");
-        Assert.False(entity.DomainValidation.IsValid());
+        Assert.True(entity.DomainValidation.IsValid());
     }
 
     [Fact]

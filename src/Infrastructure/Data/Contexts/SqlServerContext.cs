@@ -17,7 +17,11 @@ public class SqlServerContext : DbContext
     }
     
     public SqlServerContext(DbContextOptions<SqlServerContext> option) : base(option) { }
-    
+
+    public SqlServerContext()
+    {
+    }
+
     #region DbSets
 
  	//%#DbSet#%

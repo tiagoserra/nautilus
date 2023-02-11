@@ -39,6 +39,7 @@ replaceInFile() {
     cp $template $pathFileDestination
     replace '%##%' $EntityName $pathFileDestination
     replace '%#table#%' $EntityName $pathFileDestination
+    replace '%#lower#%' $(echo $EntityName | tr '[:upper:]' '[:lower:]') $pathFileDestination
 }
 
 domainHandler() {
@@ -54,10 +55,12 @@ domainHandler() {
     pathUnitTestDestination='../../../tst/UnitTests/Domain/Entities/'
 
     replaceInFile $pathUnitTestDestination'/'$EntityName'Test.cs' 'templates/EntityUnitTest.txt'
+
+    pathUnitTestDestination='../../../tst/UnitTests/Domain/Services/'
+    replaceInFile $pathUnitTestDestination'/'$EntityName'ServiceTest.cs' 'templates/ServiceUnitTest.txt'
 }
 
-infrastructHandler() 
-
+infrastructHandler() {
     echo 'Creating Infrastructure'
     pathInfrastructureDestination='../../Infrastructure'
 
@@ -69,6 +72,9 @@ infrastructHandler()
     lineTest='public DbSet<'$EntityName'> '$EntityName's { get; set; }'
     replacerNewString=$lineTest'  \n \t//%#DbSet#%'
     replaceContentByReplaceIfNotExists '//%#DbSet#%' "$replacerNewString" $pathInfrastructureContext "$lineTest"
+
+    pathUnitTestDestination='../../../tst/UnitTests/Infrastructure/Repositories/'
+    replaceInFile $pathUnitTestDestination'/'$EntityName'RepositoryTest.cs' 'templates/RepositoryUniTest.txt'
 }
 
 domainHandler

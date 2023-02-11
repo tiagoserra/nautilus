@@ -1,16 +1,16 @@
-namespace Domain.DTOs;
+namespace Domain.Validations;
 
-public class DomainValidationDto
+public class DomainValidation
 {
     public List<Error> Errors { get; private set; } = new();
 
     public void When(bool condition, string errorCode, string fieldName)
     {
-        if(!condition)
+        if(condition)
             Errors.Add(new Error(errorCode, fieldName));
     }
 
-    public bool IsValid() => Errors.Any();
+    public bool IsValid() => !Errors.Any();
 }
 
 public class Error

@@ -5,11 +5,11 @@ namespace Domain.Interfaces.Services;
 
 public interface IService<TEntity> where TEntity : Entity
 {
-    Task<DomainValidationDto> AddAsync(TEntity entity);
+    Task<DomainValidation> AddAsync(TEntity entity);
 
-    Task<DomainValidationDto> UpdateAsync(TEntity entity);
+    Task<DomainValidation> UpdateAsync(TEntity entity);
 
-    Task<DomainValidationDto> RemoveAsync(TEntity entity);
+    Task<DomainValidation> RemoveAsync(TEntity entity);
     
     Task<TEntity> GetByIdAsync(long id);
     

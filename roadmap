@@ -1,10 +1,6 @@
 layer UnitTest
-    domain
-        Entities
-        Services
     infrastructure
         Services
-        Repositories
         Eventhandler
     
 layer IntegrationTest
@@ -23,4 +19,7 @@ layer Application
     
 layer WebAPI
     controllers
+    
+Client
+    VueJs Or React
     

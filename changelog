@@ -1,3 +1,11 @@
+Sat Feb 11 18:05:00 UTC 2023
+Fix
+    Code generator error in layer infrastructure
+Feature
+    Add unit tests to services and repositories
+Small change
+    Change class DomainValidationDto to DomainValidation, and moved place
++--------------------------+
 Thu Feb 09 20:57:00 UTC 2023
 Update
     Scrutor to 4.2.1

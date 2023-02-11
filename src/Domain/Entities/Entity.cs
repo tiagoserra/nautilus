@@ -1,4 +1,3 @@
-using Domain.DTOs;
 using Domain.Events;
 using Domain.Interfaces;
 
@@ -13,7 +12,7 @@ public abstract class Entity: IHasDomainEvent
     public string ModifiedBy { get; private set; }
     public List<DomainEvent> Events { get; set; }
 
-    public DomainValidationDto DomainValidation { get; protected set; } = new();
+    public DomainValidation DomainValidation { get; protected set; } = new();
 
     public void SetCreation(string createdBy)
     {

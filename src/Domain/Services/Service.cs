@@ -14,7 +14,7 @@ public abstract class Service<TEntity>: IService<TEntity> where TEntity : Entity
         Repository = repository;
     }
     
-    public virtual async Task<DomainValidationDto> AddAsync(TEntity entity)
+    public virtual async Task<DomainValidation> AddAsync(TEntity entity)
     {
         if (!entity.DomainValidation.IsValid())
             return entity.DomainValidation;
@@ -24,7 +24,7 @@ public abstract class Service<TEntity>: IService<TEntity> where TEntity : Entity
         return null;
     }
 
-    public virtual async Task<DomainValidationDto> UpdateAsync(TEntity entity)
+    public virtual async Task<DomainValidation> UpdateAsync(TEntity entity)
     {
         if (!entity.DomainValidation.IsValid())
             return entity.DomainValidation;
@@ -34,7 +34,7 @@ public abstract class Service<TEntity>: IService<TEntity> where TEntity : Entity
         return null;
     }
 
-    public virtual async Task<DomainValidationDto> RemoveAsync(TEntity entity)
+    public virtual async Task<DomainValidation> RemoveAsync(TEntity entity)
     {
         if (!entity.DomainValidation.IsValid())
             return entity.DomainValidation;

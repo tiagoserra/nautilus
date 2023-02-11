@@ -1,0 +1,93 @@
+using Domain.Interfaces.Repositories;
+using Domain.Services;
+using Moq;
+
+namespace UnitTests.Domain.Services;
+
+public class %##%ServiceTest
+{
+    private readonly Mock<IRepository<%##%>> _repositoryMock;
+    private readonly %##%Service _%##%Service;
+
+    public %##%ServiceTest()
+    {
+        _repositoryMock = new Mock<IRepository<%##%>>();
+        _%##%Service = new %##%Service(_repositoryMock.Object);
+    }
+
+    [Fact]
+    public async Task AddAsync_When%##%IsValid_ShouldCallInsertAsync()
+    {
+        %##% %#lower#% = new("teste");
+
+        var result = await _%##%Service.AddAsync(%#lower#%);
+
+        _repositoryMock.Verify(x => x.InsertAsync(%#lower#%), Times.Once());
+    }
+
+    [Fact]
+    public async Task AddAsync_When%##%IsInvalid_ShouldNotCallInsertAsync()
+    {
+        %##% %#lower#% = new("");
+
+        await _%##%Service.AddAsync(%#lower#%);
+
+        _repositoryMock.Verify(x => x.InsertAsync(%#lower#%), Times.Never());
+    }
+
+    [Fact]
+    public async Task UpdateAsync_When%##%IsValid_ShouldCallUpdateAsync()
+    {
+        %##% %#lower#% = new("teste");
+
+        await _%##%Service.UpdateAsync(%#lower#%);
+
+        _repositoryMock.Verify(x => x.UpdateAsync(%#lower#%), Times.Once());
+    }
+
+    [Fact]
+    public async Task UpdateAsync_When%##%IsInvalid_ShouldNotCallUpdateAsync()
+    {
+        %##% %#lower#% = new("");
+
+        await _%##%Service.UpdateAsync(%#lower#%);
+
+        _repositoryMock.Verify(x => x.UpdateAsync(%#lower#%), Times.Never());
+    }
+
+    [Fact]
+    public async Task RemoveAsync_When%##%IsValid_ShouldCallUpdateAsync()
+    {
+        %##% %#lower#% = new("teste");
+
+        await _%##%Service.RemoveAsync(%#lower#%);
+
+        _repositoryMock.Verify(x => x.DeleteAsync(%#lower#%), Times.Once());
+    }
+
+    [Fact]
+    public async Task RemoveAsync_When%##%IsInvalid_ShouldNotCallUpdateAsync()
+    {
+        %##% %#lower#% = new("");
+
+        await _%##%Service.RemoveAsync(%#lower#%);
+
+        _repositoryMock.Verify(x => x.DeleteAsync(%#lower#%), Times.Never());
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ShouldCallGetByIdAsync()
+    {
+        await _%##%Service.GetByIdAsync(1);
+
+        _repositoryMock.Verify(x => x.GetByIdAsync(1), Times.Once());
+    }
+
+    [Fact]
+    public async Task GetByPaginatedAsync_ShouldCallGetByPaginatedAsync()
+    {
+        await _%##%Service.GetByPaginatedAsync(pageNumber: 1, pageSize: 15);
+
+        _repositoryMock.Verify(x => x.GetByPaginatedAsync(1, 15), Times.Once());
+    }
+}
