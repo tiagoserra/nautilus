@@ -1,38 +1,40 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using Domain.Events;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Data.Contexts;
 
-public class SqlServerContext : DbContext
+public class SqlContext : DbContext
 {
     private readonly IDomainEventHandler _domainEventService;
-    
-    public SqlServerContext(DbContextOptions<SqlServerContext> options, IDomainEventHandler domainEventService)
-        : base(options)
-    {
-        _domainEventService = domainEventService;
-    }
-    
-    public SqlServerContext(DbContextOptions<SqlServerContext> option) : base(option) { }
 
-    public SqlServerContext()
+    public SqlContext(DbContextOptions<SqlContext> options, IDomainEventHandler domainEventService)
+        : base(options)
+        => _domainEventService = domainEventService;
+
+    public SqlContext(DbContextOptions<SqlContext> option) : base(option)
+    {
+    }
+
+    public SqlContext()
     {
     }
 
     #region DbSets
 
- 	//%#DbSet#%
-    
+    //%#DbSet#%
+
     #endregion
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        var dateTimeConverter = new ValueConverter<DateTime, DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+        var dateTimeConverter =
+            new ValueConverter<DateTime, DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
@@ -56,19 +58,38 @@ public class SqlServerContext : DbContext
 
                     if (!entry.Entity.DomainValidation.IsValid())
                         throw new Exception(entry.Entity.DomainValidation.Errors.FirstOrDefault()?.Code);
-                    
-                    entry.Entity.SetCreation(string.Empty);
 
+                    entry.Entity.SetCreation(string.Empty);
+                    entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "insert"));
+                    
                     break;
 
                 case EntityState.Modified:
-                    
+
                     if (!entry.Entity.DomainValidation.IsValid())
                         throw new Exception(entry.Entity.DomainValidation.Errors.FirstOrDefault()?.Code);
-                    
-                    entry.Entity.SetModification(string.Empty);                    
+
+                    entry.Entity.SetModification(string.Empty);
+                    entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Update"));
 
                     break;
+                
+                case EntityState.Detached:
+                    break;
+                case EntityState.Unchanged:
+                    break;
+                case EntityState.Deleted:
+
+                    if (!entry.Entity.DomainValidation.IsValid())
+                        throw new Exception(entry.Entity.DomainValidation.Errors.FirstOrDefault()?.Code);
+
+                    entry.Entity.SetModification(string.Empty);
+                    entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Delete"));
+
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

@@ -1,0 +1,26 @@
+using Domain.Entities;
+using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Services;
+
+namespace Infrastructure.Manager.Dumps;
+
+internal class %##%Dump : Dump<%##%>
+{
+    private readonly I%##%Service _service;
+    private readonly I%##%Repository _repository;
+
+    public %##%Dump(I%##%Service service, I%##%Repository repository)
+        :base(service, repository, "%##%Dump", 0)
+    {
+        _service = service;
+        _repository = repository;
+    }
+
+    public override Task<bool> CanSaveAsync(%##% entity)
+        => Task.FromResult(true);
+
+    public override void RunDump()
+    {
+        Save(new %##%("name"));
+    }
+}

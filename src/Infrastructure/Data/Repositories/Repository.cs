@@ -9,13 +9,13 @@ namespace Infrastructure.Data.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
 {
-    protected SqlServerContext Context;
+    protected SqlContext Context;
     
     protected DbSet<TEntity> Entity;
     
     protected readonly QueryFactory QueryFactory;
 
-    public Repository(SqlServerContext context, QueryFactory queryFactory)
+    public Repository(SqlContext context, QueryFactory queryFactory)
     {
         Context = context;
         QueryFactory = queryFactory;

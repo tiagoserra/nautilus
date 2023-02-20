@@ -1,4 +1,15 @@
-Sat Feb 11 18:05:00 UTC 2023
+Mon Feb 20 09:59:00 UTC 2023
+up
+    MediatR 12.0.0
+feature
+    Add layer Infrastructure.Manager
+    Add dump in code generator
+    Add script runner (postgres)
+    Add docker compose
+small change
+    Change target sql database, sql server to postgres
++--------------------------+
+Sat Feb 11 09:05:00 UTC 2023
 Fix
     Code generator error in layer infrastructure
 Feature
