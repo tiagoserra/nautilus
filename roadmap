@@ -20,8 +20,5 @@ layer Application
     cache
     viewModels
     
-layer WebAPI
-    controllers
-    
 Client
     VueJs Or React

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,5 +51,28 @@ public static class InfrastructureConfiguration
         services.AddScoped<IDomainEventHandler, DomainEventHandler>();
 
         return services;
+    }
+    
+    public static void SetDefaultLanguage(string language)
+    {
+        CultureInfo cultureInfo = new(language);
+
+        switch (language)
+        {
+            case "pt-BR":
+            default:
+                cultureInfo.NumberFormat.CurrencySymbol = "R$";
+                cultureInfo.NumberFormat.CurrencyGroupSeparator = ",";
+
+                break;
+            case "en-US":
+                cultureInfo.NumberFormat.CurrencySymbol = "$";
+                cultureInfo.NumberFormat.CurrencyGroupSeparator = ".";
+
+                break;
+        }
+
+        CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+        CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
     }
 }

@@ -4,17 +4,20 @@
 #   Author: Tiago Serra
 #   Date: 30/01/2023 19:00
 #   Keywords: Create, file .cs,
-#   Comments: how to call script ./cg.sh entityName yes no
+#   Comments: how to call script ./cg.sh entityName yes no no
 #   Tips: chmod +x cg.sh
 #
 #   entityName => entity
 #   yes => to create unit tests
 #   yes => to create dum
+#   yes => to create in WebApi
 #
 #----------------------------------------------------------------------------------------------------------------------------------------
 
 EntityName=$1
 WithUnitTest=$2
+Dump=$3
+WithWebApi=$4
 
 if [[ -z "$EntityName" ]]; then
     echo ERROR: "argument error (EntityName) "
@@ -92,9 +95,30 @@ unitTestsHandler(){
     replaceInFile $pathUnitTestDestination'/'$EntityName'RepositoryTest.cs' 'templates/RepositoryUniTest.txt'
 }
 
+webApiHandler(){
+
+    echo 'Creating WebApi'
+
+    replaceInFile '../../src/WebApi/Controllers/'$EntityName'Controller.cs' 'templates/Controller.txt'
+
+    pathDtos='../../src/WebApi/Dtos/'$EntityName'/'
+
+    if [ ! -f "$pathViews" ]; then
+        mkdir -p $pathViews
+    fi
+
+    replaceInFile $pathViews'/Get'$EntityName'Dto.cs' 'templates/GetDto.txt'
+    replaceInFile $pathViews'/Post'$EntityName'Dto.cs' 'templates/PostDto.txt'
+    replaceInFile $pathViews'/Put'$EntityName'Dto.cs' 'templates/PutDto.txt'
+}
+
 domainHandler
 infrastructHandler
 
 if [ $WithUnitTest = 'yes' ]; then
     unitTestsHandler
+fi
+
+if [ $WithWebApi = 'yes' ]; then
+    webApiHandler
 fi

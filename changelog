@@ -1,12 +1,18 @@
+Tue Feb 21 08:44:00 UTC 2023
+Update
+    Microsoft.NET.Test.Sdk to 17.5.0
+Feature
+    Add layer WebApi
++--------------------------+
 Mon Feb 20 09:59:00 UTC 2023
-up
-    MediatR 12.0.0
-feature
+Update
+    MediatR to 12.0.0
+Feature
     Add layer Infrastructure.Manager
     Add dump in code generator
     Add script runner (postgres)
     Add docker compose
-small change
+Small change
     Change target sql database, sql server to postgres
 +--------------------------+
 Sat Feb 11 09:05:00 UTC 2023
@@ -21,9 +27,9 @@ Thu Feb 09 20:57:00 UTC 2023
 Update
     Scrutor to 4.2.1
     SqlKata to 3.2.3
-    SqlKata.Execution 3.2.3
+    SqlKata.Execution to 3.2.3
     Microsoft.NET.Test.Sdk to 17.4.1
-    Moq 4.18.4
+    Moq to 4.18.4
     coverlet.collector to 3.2.0
 Small change
     style of code same classes

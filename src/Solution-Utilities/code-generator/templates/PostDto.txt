@@ -1,0 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApi.Dtos;
+
+public class Post%##%Dto
+{
+    [Required]
+    [MaxLength(255)]
+    [DataType(DataType.Text)]
+    public string Name { get; set; }
+
+    public %##% ToModel()
+    {
+        return new %##%(this.Name);
+    }
+}
