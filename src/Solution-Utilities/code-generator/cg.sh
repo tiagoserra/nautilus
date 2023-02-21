@@ -99,17 +99,17 @@ webApiHandler(){
 
     echo 'Creating WebApi'
 
-    replaceInFile '../../src/WebApi/Controllers/'$EntityName'Controller.cs' 'templates/Controller.txt'
+    replaceInFile '../../WebApi/Controllers/'$EntityName'Controller.cs' 'templates/Controller.txt'
 
-    pathDtos='../../src/WebApi/Dtos/'$EntityName'/'
+    pathDtos='../../WebApi/Dtos/'$EntityName'/'
 
-    if [ ! -f "$pathViews" ]; then
-        mkdir -p $pathViews
+    if [ ! -f "$pathDtos" ]; then
+        mkdir -p $pathDtos
     fi
 
-    replaceInFile $pathViews'/Get'$EntityName'Dto.cs' 'templates/GetDto.txt'
-    replaceInFile $pathViews'/Post'$EntityName'Dto.cs' 'templates/PostDto.txt'
-    replaceInFile $pathViews'/Put'$EntityName'Dto.cs' 'templates/PutDto.txt'
+    replaceInFile $pathDtos'/Get'$EntityName'Dto.cs' 'templates/GetDto.txt'
+    replaceInFile $pathDtos'/Post'$EntityName'Dto.cs' 'templates/PostDto.txt'
+    replaceInFile $pathDtos'/Put'$EntityName'Dto.cs' 'templates/PutDto.txt'
 }
 
 domainHandler

@@ -7,7 +7,7 @@ namespace Infrastructure.Data.Repositories;
 
 public class %##%Repository : Repository<%##%>, I%##%Repository
 {
-     public %##%Repository(SqlServerContext context, QueryFactory queryFactory)
+     public %##%Repository(SqlContext context, QueryFactory queryFactory)
         : base(context, queryFactory)
     {
     }

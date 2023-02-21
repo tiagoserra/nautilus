@@ -1,94 +1,94 @@
-using Swashbuckle.AspNetCore.Annotations;
 using Domain.DTOs;
-using Domain.Services;
-using WebApi.Dtos.%##%;
+using Swashbuckle.AspNetCore.Annotations;
+using Domain.Interfaces.Services;
+using WebApi.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
+
+[Route("api/%#ROUTE#%/{action}")]
+public class %##%Controller : ApiController
 {
-	[Route("api/%#ROUTE#%/{action}")]
-    public class %##%Controller : ApiController
+    private readonly I%##%Service _service;
+
+    public %##%Controller(ILogger<ApiController> logger, I%##%Service service)
+        :base(logger)
     {
-        privarte readonly I%##%Service _service;
+        _service = service;
+    }
 
-        public %##%Controller(ILogger<ApiController> logger, I%##%Service service)
-            :base(logger)
-        {
-            _service = service;
-        }
+    [HttpGet]
+    [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(PaginatedResultDto))]
+    public async Task<ActionResult<PaginatedResultDto>> Get([FromQuery] int pagesize = 25, [FromQuery] int pageIndex = 1)
+        => await _service.GetByPaginatedAsync(pageNumber: pageIndex,pageSize: pagesize);
 
-        [HttpGet]
-        [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(PaginatedResultDto>))]
-        public async Task<ActionResult<PaginatedResultDto>>> Get([FromQuery] int pagesize = 25, [FromQuery] int pageIndex = 1)
-            => await _service.GetByPaginatedAsync(int pageNumber: pageIndex,pageSize: pagesize);
+    [HttpGet("{id}")]
+    [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(Get%##%Dto))]
+    public async Task<ActionResult<Get%##%Dto>> Get(long id)
+    {
+        if (id == 0)
+            return BadRequest();
 
-        [HttpGet("{id}")]
-        [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(Get%##%Dto))]
-        public async Task<ActionResult<Get%##%Dto>> Get(long id)
-        {
-            if (id is null || id == 0)
-                return BadRequest();
+        var entity = await _service.GetByIdAsync(id);
 
-            var entity = await _service.GetByIdAsync(id);
+        if(entity is null)
+            return NotFound();
 
-            if(entity is null)
-                return NotFound();
+        return new Get%##%Dto(entity);
+    }
 
-            return new Get%##%Dto(entity);
-        }
+    [HttpPost]
+    [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(long))]
+    public async Task<ActionResult> Post(Post%##%Dto dto)
+    {
+        if(dto is null)
+            return BadRequest();
 
-        [HttpPost]
-        [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(long))]
-        public async Task<ActionResult> Post(Post%##%Dto dto)
-        {
-            if(dto is null)
-                return BadRequest();
+        var result = await _service.AddAsync(dto.ToModel());
 
-            var result = await _service.AddAsync(dto.ToModel())
+        if(result is null)
+            return Ok();
+        else
+            return BadRequest(result.Errors.First()); //todo show all errors
+    }
 
-            if(result is null)
-                Return Ok();
-            else
-                return BadRequest(result.Errors.First()); //todo show all errors
-        }
+    [HttpPut("{id}")]
+    [SwaggerResponse((int)System.Net.HttpStatusCode.NoContent)]
+    public async Task<ActionResult> Put(long id, Put%##%Dto dto)
+    {
+        if (id == 0 || id != dto.Id)
+            return BadRequest();
 
-        [HttpPut("{id}")]
-        [SwaggerResponse((int)System.Net.HttpStatusCode.NoContent)]
-        public async Task<ActionResult> Put(long id, Put%##%Dto dto)
-        {
-            if (id is null || id == 0 || id != dto.Id)
-                return BadRequest();
+        var entity = await _service.GetByIdAsync(id);
 
-            var entity = await _service.GetByIdAsync(id);
+        if(entity is null)
+            return NotFound();
 
-            if(entity is null)
-                return NotFound();
+        var result = await _service.UpdateAsync(dto.ToModel(entity));
 
-            var result = await _service.UpdateAsync(dto.ToModel(entity))
+        if(result is null)
+            return NoContent();
+        else
+            return BadRequest(result.Errors.First()); //todo show all errors
+    }
 
-            if(result is null)
-                Return NoContent();
-            else
-                return BadRequest(result.Errors.First()); //todo show all errors
-        }
+    [HttpDelete("{id}")]
+    [SwaggerResponse((int)System.Net.HttpStatusCode.NoContent)]
+    public async Task<ActionResult> Delete(long id)
+    {
+        if (id == 0)
+            return BadRequest();
 
-        [HttpDelete("{id}")]
-        [SwaggerResponse((int)System.Net.HttpStatusCode.NoContent)]
-        public async Task<ActionResult> Delete(long id)
-        {
-            if (id is null || id == 0)
-                return BadRequest();
+        var entity = await _service.GetByIdAsync(id);
 
-            var entity = await _service.GetByIdAsync(id);
+        if(entity is null)
+            return NotFound();
 
-            if(entity is null)
-                return NotFound();
-
-            var result = await _service.RemoveAsync(entity)
-            
-            if(result is null)
-                Return NoContent();
-            else
-                return BadRequest(result.Errors.First()); //todo show all errors
-        }
+        var result = await _service.RemoveAsync(entity);
+        
+        if(result is null)
+            return NoContent();
+        else
+            return BadRequest(result.Errors.First()); //todo show all errors
     }
 }

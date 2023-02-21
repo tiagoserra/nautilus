@@ -7,13 +7,13 @@ namespace UnitTests.Infrastructure.Repositories;
 
 public class %##%RepositoryTest
 {
-    private readonly Mock<SqlServerContext> _contextMock;
+    private readonly Mock<SqlContext> _contextMock;
     private readonly Mock<DbSet<%##%>> _dbSetMock;
     private readonly %##%Repository _repository;
 
     public %##%RepositoryTest()
     {
-        _contextMock = new Mock<SqlServerContext>();
+        _contextMock = new Mock<SqlContext>();
         _dbSetMock = new Mock<DbSet<%##%>>();
         
         _contextMock.Setup(c => c.Set<%##%>()).Returns(_dbSetMock.Object);

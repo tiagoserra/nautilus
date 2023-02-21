@@ -19,8 +19,8 @@ internal class %##%Dump : Dump<%##%>
     public override Task<bool> CanSaveAsync(%##% entity)
         => Task.FromResult(true);
 
-    public override void RunDump()
+    public override async Task DumpAsync()
     {
-        Save(new %##%("name"));
+        await Save(new %##%("name"));
     }
 }
