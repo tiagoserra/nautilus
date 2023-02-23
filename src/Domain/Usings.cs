@@ -1,1 +1,1 @@
-global using Domain.Validations;
+global using FluentValidation;

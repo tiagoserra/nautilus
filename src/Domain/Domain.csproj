@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <Folder Include="Enums" />
+    <Folder Include="Validations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
   </ItemGroup>
 
 </Project>

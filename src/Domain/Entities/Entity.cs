@@ -11,9 +11,7 @@ public abstract class Entity: IHasDomainEvent
     public DateTimeOffset ModifiedOn { get; private set; }
     public string ModifiedBy { get; private set; }
     public List<DomainEvent> Events { get; set; }
-
-    public DomainValidation DomainValidation { get; protected set; } = new();
-
+    
     public void SetCreation(string createdBy)
     {
         CreatedOn = DateTimeOffset.UtcNow;

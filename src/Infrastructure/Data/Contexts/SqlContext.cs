@@ -55,19 +55,13 @@ public class SqlContext : DbContext
             switch (entry.State)
             {
                 case EntityState.Added:
-
-                    if (!entry.Entity.DomainValidation.IsValid())
-                        throw new Exception(entry.Entity.DomainValidation.Errors.FirstOrDefault()?.Code);
-
+                    
                     entry.Entity.SetCreation(string.Empty);
                     entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "insert"));
                     
                     break;
 
                 case EntityState.Modified:
-
-                    if (!entry.Entity.DomainValidation.IsValid())
-                        throw new Exception(entry.Entity.DomainValidation.Errors.FirstOrDefault()?.Code);
 
                     entry.Entity.SetModification(string.Empty);
                     entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Update"));
@@ -79,10 +73,7 @@ public class SqlContext : DbContext
                 case EntityState.Unchanged:
                     break;
                 case EntityState.Deleted:
-
-                    if (!entry.Entity.DomainValidation.IsValid())
-                        throw new Exception(entry.Entity.DomainValidation.Errors.FirstOrDefault()?.Code);
-
+                    
                     entry.Entity.SetModification(string.Empty);
                     entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Delete"));
 

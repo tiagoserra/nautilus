@@ -1,6 +1,10 @@
-Tue Feb 21 13:50:00 UTC 2023
+Tue Feb 23 18:33:00 UTC 2023
 Fix
     Code generator errors in layer WebApi
+    Change connection string name
+    
+Small change
+    Change way validation to FluentValidation
 +--------------------------+
 Tue Feb 21 08:44:00 UTC 2023
 Update

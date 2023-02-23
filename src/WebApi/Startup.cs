@@ -32,11 +32,11 @@ public class Startup
         services.AddInfracstruture(Configuration);
         services.AddTransient<IJwtService, JwtService>();
 
-        services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration = Configuration.GetConnectionString("RedisConnection");
-            options.InstanceName = Configuration["EnvironmentName"].Replace(" ", "");
-        });
+        // services.AddStackExchangeRedisCache(options =>
+        // {
+        //     options.Configuration = Configuration.GetConnectionString("RedisConnection");
+        //     options.InstanceName = Configuration["EnvironmentName"].Replace(" ", "");
+        // });
 
         services.AddControllers();
         services.AddEndpointsApiExplorer();

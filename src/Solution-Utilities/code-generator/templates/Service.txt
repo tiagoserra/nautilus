@@ -10,4 +10,37 @@ public class %##%Service : Service<%##%>, I%##%Service
         : base(repository)
     {
     }
+
+    public override async Task<ValidationResult> AddAsync(%##% entity)
+    {
+        var validator = new %##%Validator();
+        var results = validator.Validate(entity);
+
+        if(!results.IsValid)
+            return results;
+
+        return base.AddAsync(entity);
+    }
+
+    public override async Task<ValidationResult> UpdateAsync(%##% entity)
+    {
+        var validator = new %##%Validator();
+        var results = validator.Validate(entity);
+
+        if(!results.IsValid)
+            return results;
+
+        return base.UpdateAsync(entity);
+    }
+
+    public override async Task<ValidationResult> RemoveAsync(%##% entity)
+    {
+        var validator = new %##%Validator();
+        var results = validator.Validate(entity);
+
+        if(!results.IsValid)
+            return results;
+
+        return base.RemoveAsync(entity);
+    }
 }

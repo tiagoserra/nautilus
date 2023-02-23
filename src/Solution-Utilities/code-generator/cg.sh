@@ -57,6 +57,7 @@ domainHandler() {
     replaceInFile $pathDomainDestination'/Interfaces/Services/I'$EntityName'Service.cs' 'templates/IService.txt'
 
     replaceInFile $pathDomainDestination'/Services/'$EntityName'Service.cs' 'templates/Service.txt'
+    replaceInFile $pathDomainDestination'/Validations/'$EntityName'Validator.cs' 'templates/EntityValidation.txt'
 }
 
 infrastructHandler() {

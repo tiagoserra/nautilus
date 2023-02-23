@@ -1,15 +1,16 @@
 using Domain.DTOs;
 using Domain.Entities;
+using FluentValidation.Results;
 
 namespace Domain.Interfaces.Services;
 
 public interface IService<TEntity> where TEntity : Entity
 {
-    Task<DomainValidation> AddAsync(TEntity entity);
+    Task<ValidationResult> AddAsync(TEntity entity);
 
-    Task<DomainValidation> UpdateAsync(TEntity entity);
+    Task<ValidationResult> UpdateAsync(TEntity entity);
 
-    Task<DomainValidation> RemoveAsync(TEntity entity);
+    Task<ValidationResult> RemoveAsync(TEntity entity);
     
     Task<TEntity> GetByIdAsync(long id);
     

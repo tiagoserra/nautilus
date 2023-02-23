@@ -29,7 +29,7 @@ internal class ScriptRunner
 
     private void DropDatabase()
     {
-        NpgsqlConnectionStringBuilder builder = new(_configuration.GetConnectionString("ConnDefault"));
+        NpgsqlConnectionStringBuilder builder = new(_configuration.GetConnectionString("ConnSql"));
         var databaseName = builder.Database;
         builder.Database = builder.Username;
 
@@ -51,7 +51,7 @@ internal class ScriptRunner
 
         var upgradeEngine = DeployChanges
             .To
-            .PostgresqlDatabase(_configuration.GetConnectionString("ConnDefault"))
+            .PostgresqlDatabase(_configuration.GetConnectionString("ConnSql"))
             .WithScriptsFromFileSystem
             (
                 Path.Combine(rootPath, scriptPath), new FileSystemScriptOptions
