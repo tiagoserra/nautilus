@@ -15,7 +15,7 @@ public class Put%##%Dto
 
     public %##% ToModel(%##% model)
     {
-        model.AlterName(this.Name);
+        model.Name = this.Name;
 
         return model;
     }

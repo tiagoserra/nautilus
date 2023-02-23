@@ -1,6 +1,8 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
+using Domain.Validations;
+using FluentValidation.Results;
 
 namespace Domain.Services;
 
@@ -19,7 +21,9 @@ public class %##%Service : Service<%##%>, I%##%Service
         if(!results.IsValid)
             return results;
 
-        return base.AddAsync(entity);
+        await base.AddAsync(entity);
+
+        return results;
     }
 
     public override async Task<ValidationResult> UpdateAsync(%##% entity)
@@ -30,7 +34,9 @@ public class %##%Service : Service<%##%>, I%##%Service
         if(!results.IsValid)
             return results;
 
-        return base.UpdateAsync(entity);
+        await base.UpdateAsync(entity);
+
+        return results;
     }
 
     public override async Task<ValidationResult> RemoveAsync(%##% entity)
@@ -41,6 +47,8 @@ public class %##%Service : Service<%##%>, I%##%Service
         if(!results.IsValid)
             return results;
 
-        return base.RemoveAsync(entity);
+        await base.RemoveAsync(entity);
+
+        return results;
     }
 }

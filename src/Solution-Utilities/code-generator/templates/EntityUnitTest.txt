@@ -3,16 +3,9 @@ namespace UnitTests.Domain.Entities;
 public class %##%Tests
 {
     [Fact]
-    public void Create%##%WithNameValid()
+    public void Create%##%()
     {
         var entity = new %##%("name");
-        Assert.True(entity.DomainValidation.IsValid());
-    }
-
-    [Fact]
-    public void Create%##%WithNameInValid()
-    {
-        var entity = new %##%("");
-        Assert.False(entity.DomainValidation.IsValid());
+        Assert.Equal("name", entity.Name);
     }
 }

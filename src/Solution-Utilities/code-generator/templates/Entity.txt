@@ -2,19 +2,12 @@ namespace Domain.Entities;
 
 public class %##% : Entity
 {
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
     public %##%(string name)
     {
-        DomainValidation.When(string.IsNullOrEmpty(name), "Invalid name. Name is required", "Name");
         Name = name;
     }
 
     protected %##%() { }
-
-    public void AlterName(string name)
-    {
-        DomainValidation.When(string.IsNullOrEmpty(name), "Invalid name. Name is required", "Name");
-        Name = name;
-    }
 }
