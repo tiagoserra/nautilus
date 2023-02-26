@@ -7,7 +7,7 @@ public class %##%Validator : AbstractValidator<%##%>
     public %##%Validator()
     {
         RuleFor(c => c.Name)
-            .NotEmpty().WithMessage("Please ensure you have entered the Name")
-            .Length(2, 150).WithMessage("The Name must have between 2 and 150 characters");
+            .NotEmpty().WithMessage("The name field cannot be empty")
+            .Length(2, 256).WithMessage("The name field must have between 2 and 256 characters");
     }
 }

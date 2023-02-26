@@ -3,22 +3,18 @@ using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Infrastructure.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
-using SqlKata.Execution;
 
 namespace Infrastructure.Data.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
 {
-    protected SqlContext Context;
+    protected readonly SqlContext Context;
     
-    protected DbSet<TEntity> Entity;
-    
-    protected readonly QueryFactory QueryFactory;
+    protected readonly DbSet<TEntity> Entity;
 
-    public Repository(SqlContext context, QueryFactory queryFactory)
+    public Repository(SqlContext context)
     {
         Context = context;
-        QueryFactory = queryFactory;
         Entity = context.Set<TEntity>();
     }
 
@@ -53,13 +49,23 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     }
 
     public async Task<TEntity> GetByIdAsync(long id)
-        => await QueryFactory.Query(typeof(TEntity).Name).Where("Id", id).FirstAsync<TEntity>();
+        => await Entity.FirstAsync(p => p.Id == id);
 
     public async Task<PaginatedResultDto> GetByPaginatedAsync(int pageNumber = 1, int pageSize = 25)
     {
-        var query = QueryFactory.Query(typeof(TEntity).Name);
-        var data = await query.OrderBy("Id").PaginateAsync(pageNumber, pageSize);
+        var data = Entity.AsNoTracking().AsQueryable();
+        
+        var totalRecords = data.Count();
 
-        return data is null ? new PaginatedResultDto(0,0,0,0, null) : new PaginatedResultDto(data.TotalPages, pageNumber, pageSize, data.Count, data.List);
+        var result = await data.OrderBy(p => p.CreatedOn)
+            .Skip((pageNumber * pageSize))
+            .Take(pageSize)
+            .ToListAsync();
+        
+        double resultado = totalRecords / pageSize;
+        
+        return result is null ? 
+            new PaginatedResultDto(0,0,0,0, null) : 
+            new PaginatedResultDto((int)Math.Ceiling(resultado), pageNumber, pageSize, totalRecords, result);
     }
 }

@@ -1,7 +1,6 @@
 using Infrastructure.Data.Contexts;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
-using SqlKata.Execution;
 
 namespace UnitTests.Infrastructure.Repositories;
 
@@ -17,9 +16,8 @@ public class %##%RepositoryTest
         _dbSetMock = new Mock<DbSet<%##%>>();
         
         _contextMock.Setup(c => c.Set<%##%>()).Returns(_dbSetMock.Object);
-        
-        var queryFactoryMock = new Mock<QueryFactory>();
-        _repository = new %##%Repository(_contextMock.Object, queryFactoryMock.Object);
+
+        _repository = new %##%Repository(_contextMock.Object);
     }
     
     [Fact]

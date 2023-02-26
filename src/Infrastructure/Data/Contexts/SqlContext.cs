@@ -25,7 +25,7 @@ public class SqlContext : DbContext
 
     #region DbSets
 
-    //%#DbSet#%
+ 	//%#DbSet#%
 
     #endregion
 
@@ -57,14 +57,14 @@ public class SqlContext : DbContext
                 case EntityState.Added:
                     
                     entry.Entity.SetCreation(string.Empty);
-                    entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "insert"));
+                    //entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "insert"));
                     
                     break;
 
                 case EntityState.Modified:
 
                     entry.Entity.SetModification(string.Empty);
-                    entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Update"));
+                    //entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Update"));
 
                     break;
                 
@@ -75,7 +75,7 @@ public class SqlContext : DbContext
                 case EntityState.Deleted:
                     
                     entry.Entity.SetModification(string.Empty);
-                    entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Delete"));
+                    //entry.Entity.Events.Add(new AuditEvent<Entity>(entry.Entity, "Delete"));
 
                     break;
                 

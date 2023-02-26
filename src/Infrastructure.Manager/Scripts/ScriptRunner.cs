@@ -19,12 +19,13 @@ internal class ScriptRunner
         if (dropDatabase)
             DropDatabase();
 
-        RunScripts("Scripts/runBeforeUp/");
+        RunScripts("Scripts/runAfter/");
         RunScripts("Scripts/tables/");
         RunScripts("Scripts/indexes/");
         RunScripts("Scripts/functions/");
         RunScripts("Scripts/triggers/");
         RunScripts("Scripts/procedures/");
+        RunScripts("Scripts/runBefore/");
     }
 
     private void DropDatabase()

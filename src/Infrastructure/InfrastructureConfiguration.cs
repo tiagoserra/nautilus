@@ -6,10 +6,11 @@ using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
+using Domain.Services;
 using Infrastructure.Data.Contexts;
+using Infrastructure.Data.Repositories;
 using Infrastructure.EventHandlers;
 using Npgsql;
-using SqlKata.Execution;
 
 namespace Infrastructure;
 
@@ -24,22 +25,18 @@ public static class InfrastructureConfiguration
 
         services.AddScoped<SqlContext>();
 
-        services.AddSingleton(provider => new QueryFactory
-        {
-            Connection = new NpgsqlConnection(configuration.GetConnectionString("ConnSql"))
-            //Logger = compiled => Console.WriteLine(compiled)
-        });
-
         services.Scan(scan => scan
-            .FromAssemblyOf<Entity>()
-            .AddClasses(classes => classes.AssignableTo(typeof(IRepository<>)))
+            .FromAssemblyOf<SqlContext>()
+            .AddClasses(classes => classes.AssignableTo(typeof(Repository<>))
+                .Where(type => type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRepository<>))))
             .AsImplementedInterfaces()
             .WithScopedLifetime()
         );
 
         services.Scan(scan => scan
             .FromAssemblyOf<Entity>()
-            .AddClasses(classes => classes.AssignableTo(typeof(IService<>)))
+            .AddClasses(classes => classes.AssignableTo(typeof(Service<>))
+                .Where(type => type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IService<>))))
             .AsImplementedInterfaces()
             .WithScopedLifetime()
         );

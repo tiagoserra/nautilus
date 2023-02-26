@@ -1,3 +1,19 @@
+Sat Feb 25 22:46:00 UTC 2023
+Fix
+    Fixed mapping base
+    Fixed ScriptRunner error path
+    Fixed Manager run dumps
+    Fixed replace in route controller
+    Fixed Scrutor resolver Services and Repositories
+    Fixed docker compose volume
+Update
+    MediatR to 12.0.1
+    NetCore to 7.0.200
+Small change
+    Change dto to Model and path
+    Remove SQLKata and chante queries to EF, reason for incompatibility with generic types and schemes
+    Change unit tests Entity
++--------------------------+
 Tue Feb 23 18:51:00 UTC 2023
 Fix
     Fix templates

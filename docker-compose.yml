@@ -3,23 +3,25 @@ version: '3.9'
 services:
 
   postgresdb:
-      image: postgres
-      container_name: postgres
-      restart: unless-stopped
-      environment:
-            POSTGRES_PASSWORD: RGV1cyBzZWphIGxvdXZhZG8g
-      ports:
-          - "5432:5432"
-      volumes:
-          - local-storage:/var/lib/postgresql/data/
-          - ./src/solution-utilities/docker:/infile
-      networks:
-          - bridge-network
+    image: postgres
+    container_name: postgres_nautilus
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: UPjhg?eLKhAs9?:*jR%Ta?-zz
+    ports:
+      - "5432:5432"
+    volumes:
+      - nautilus-storage:/var/lib/postgresql/data/
+      - ./src/solution-utilities/docker:/infile
+    networks:
+      - bridge-network
 
-networks: 
-    bridge-network:
-        driver: bridge
+networks:
+  bridge-network:
+    driver: bridge
 
 volumes:
-    local-storage:
-    #    external: true
+  nautilus-storage:
+    external: true
+    
+# docker volume create nautilus-storage

@@ -49,6 +49,8 @@ public class Startup
         }
 
         _serviceCollection.AddInfracstruture(_configuration);
+        AddDumps(_serviceCollection);
+        
         _serviceProvider = _serviceCollection.BuildServiceProvider();
 
         ConsoleDraw.DrawFeedBack("Dumps: ");
@@ -60,12 +62,27 @@ public class Startup
 
         ConsoleDraw.DrawFeedBack(string.Empty);
     }
-    
+
     private static Type[] GetClassDump()
-    {   
+    {
         return (from asm in AppDomain.CurrentDomain.GetAssemblies()
             from type in asm.GetTypes()
             where type.IsClass && type.Name.EndsWith("Dump")
             select type).ToArray();
+    }
+
+    private void AddDumps(IServiceCollection services)
+    {
+        // Not work
+        // services.Scan(scan => scan
+        //     .FromAssemblyOf<Program>()
+        //     .AddClasses(classes => classes.AssignableTo(typeof(Dump<>))
+        //         .Where(type => type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDump))))
+        //     .AsImplementedInterfaces()
+        //     .WithScopedLifetime()
+        // );
+
+        foreach (var item in GetClassDump())
+            services.AddScoped(item);
     }
 }

@@ -1,14 +1,13 @@
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Infrastructure.Data.Contexts;
-using SqlKata.Execution;
 
 namespace Infrastructure.Data.Repositories;
 
 public class %##%Repository : Repository<%##%>, I%##%Repository
 {
-     public %##%Repository(SqlContext context, QueryFactory queryFactory)
-        : base(context, queryFactory)
+     public %##%Repository(SqlContext context)
+        : base(context)
     {
     }
 }

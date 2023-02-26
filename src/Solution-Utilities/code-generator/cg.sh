@@ -44,8 +44,9 @@ replaceInFile() {
 
     cp $template $pathFileDestination
     replace '%##%' $EntityName $pathFileDestination
-    replace '%#table#%' $EntityName $pathFileDestination
+    replace '%#table#%' $(echo $EntityName | tr '[:upper:]' '[:lower:]') $pathFileDestination
     replace '%#lower#%' $(echo $EntityName | tr '[:upper:]' '[:lower:]') $pathFileDestination
+    replace '%#ROUTE#%' $(echo $EntityName | tr '[:upper:]' '[:lower:]')'s' $pathFileDestination
 }
 
 domainHandler() {
@@ -102,15 +103,14 @@ webApiHandler(){
 
     replaceInFile '../../WebApi/Controllers/'$EntityName'Controller.cs' 'templates/Controller.txt'
 
-    pathDtos='../../WebApi/Dtos/'$EntityName'/'
+    pathModels='../../WebApi/Models/'
 
     if [ ! -f "$pathDtos" ]; then
         mkdir -p $pathDtos
     fi
 
-    replaceInFile $pathDtos'/Get'$EntityName'Dto.cs' 'templates/GetDto.txt'
-    replaceInFile $pathDtos'/Post'$EntityName'Dto.cs' 'templates/PostDto.txt'
-    replaceInFile $pathDtos'/Put'$EntityName'Dto.cs' 'templates/PutDto.txt'
+    replaceInFile $pathDtos'/'$EntityName'Model.cs' 'templates/Model.txt'
+    replaceInFile $pathDtos'/Update'$EntityName'Model.cs' 'templates/UpdateModel.txt'
 }
 
 domainHandler

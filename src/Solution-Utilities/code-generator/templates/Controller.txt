@@ -1,7 +1,7 @@
 using Domain.DTOs;
 using Swashbuckle.AspNetCore.Annotations;
 using Domain.Interfaces.Services;
-using WebApi.Dtos;
+using WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -23,8 +23,8 @@ public class %##%Controller : ApiController
         => await _service.GetByPaginatedAsync(pageNumber: pageIndex,pageSize: pagesize);
 
     [HttpGet("{id}")]
-    [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(Get%##%Dto))]
-    public async Task<ActionResult<Get%##%Dto>> Get(long id)
+    [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(%##%Model))]
+    public async Task<ActionResult<%##%Model>> Get(long id)
     {
         if (id == 0)
             return BadRequest();
@@ -34,27 +34,27 @@ public class %##%Controller : ApiController
         if(entity is null)
             return NotFound();
 
-        return new Get%##%Dto(entity);
+        return new Update%##%Model(entity);
     }
 
     [HttpPost]
     [SwaggerResponse((int)System.Net.HttpStatusCode.OK, Type = typeof(long))]
-    public async Task<ActionResult> Post(Post%##%Dto dto)
+    public async Task<ActionResult> Post(%##%Model model)
     {
         if(dto is null)
             return BadRequest();
 
-        var result = await _service.AddAsync(dto.ToModel());
+        var result = await _service.AddAsync(model.ToDomain());
 
         if(result is null)
             return Ok();
-        else
-            return BadRequest(result.Errors.First()); //todo show all errors
+        
+        return BadRequest(result.Errors);
     }
 
     [HttpPut("{id}")]
     [SwaggerResponse((int)System.Net.HttpStatusCode.NoContent)]
-    public async Task<ActionResult> Put(long id, Put%##%Dto dto)
+    public async Task<ActionResult> Put(long id, Update%##%Model model)
     {
         if (id == 0 || id != dto.Id)
             return BadRequest();
@@ -64,12 +64,14 @@ public class %##%Controller : ApiController
         if(entity is null)
             return NotFound();
 
-        var result = await _service.UpdateAsync(dto.ToModel(entity));
+        entity.Name = model.Name;
+
+        var result = await _service.UpdateAsync(entity);
 
         if(result is null)
             return NoContent();
-        else
-            return BadRequest(result.Errors.First()); //todo show all errors
+        
+        return BadRequest(result.Errors);
     }
 
     [HttpDelete("{id}")]
@@ -88,7 +90,7 @@ public class %##%Controller : ApiController
         
         if(result is null)
             return NoContent();
-        else
-            return BadRequest(result.Errors.First()); //todo show all errors
+        
+        return BadRequest(result.Errors);
     }
 }
